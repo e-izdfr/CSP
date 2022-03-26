@@ -7,16 +7,14 @@ def check_Adjacency_Limit(state : State):
     for i in range(0, state.size):
         for j in range(0, state.size - 2):
             if(state.board[i][j].value.upper() == state.board[i][j + 1].value.upper() and 
-            state.board[i][j + 1].value.upper() == state.board[i][j + 2].value.upper() and state.board[i][j].value != '_' and 
-            state.board[i][j + 1].value != '_' and state.board[i][j + 2].value != '_' ):
+            state.board[i][j + 1].value.upper() == state.board[i][j + 2].value.upper() and state.board[i][j].value != '_'):
                 return False
             
     #check cols
     for j in range(0, state.size): # cols
         for i in range(0, state.size - 2): # rows
             if(state.board[i][j].value.upper() == state.board[i + 1][j].value.upper() and
-            state.board[i + 1][j].value.upper() == state.board[i + 2][j].value.upper() and state.board[i][j].value != '_' and
-            state.board[i + 1][j].value != '_' and state.board[i + 2][j].value != '_' ):
+            state.board[i + 1][j].value.upper() == state.board[i + 2][j].value.upper() and state.board[i][j].value != '_'):
                 return False
     
     return True
@@ -29,10 +27,10 @@ def check_circles_limit(state : State): # returns false if number of white or bl
         
         for j in range(0, state.size): # each col
             # if cell is black or white and it is not empty (!= '__')
-            if(state.board[i][j].value.upper() == 'W' and state.board[i][j].value != '_'):
+            if(state.board[i][j].value.upper() == 'W'):
                 no_white_row += 1
                 
-            if(state.board[i][j].value.upper() == 'B' and state.board[i][j].value != '_'):
+            if(state.board[i][j].value.upper() == 'B'):
                 no_black_row += 1
                 
         if no_white_row > state.size / 2 or no_black_row > state.size / 2:
@@ -69,8 +67,7 @@ def is_unique(state : State): # checks if all rows are unique && checks if all c
             count = 0
             
             for k in range(0, state.size):
-                if(state.board[i][k].value.upper() == state.board[j][k].value.upper() and state.board[i][k].value != '_' and
-                state.board[j][k].value != '_'):
+                if(state.board[i][k].value.upper() == state.board[j][k].value.upper() and state.board[i][k].value != '_'):
                     count += 1
                     
             if count == state.size:
@@ -84,8 +81,7 @@ def is_unique(state : State): # checks if all rows are unique && checks if all c
             count_col = 0 
             
             for i in range(0, state.size):
-                 if(state.board[i][j].value.upper() == state.board[i][k].value.upper() and state.board[i][j].value != '_' and
-                    state.board[i][k].value != '_' ):
+                 if(state.board[i][j].value.upper() == state.board[i][k].value.upper() and state.board[i][j].value != '_'):
                     count_col += 1
                     
             if count_col == state.size:
