@@ -2,6 +2,7 @@ from time import time
 from Binairo import *
 from Cell import *
 from State import *
+import random
 ## w b
 
 def main():
@@ -35,6 +36,28 @@ def main():
     print('initial board:')
     state.print_board()
     start_time = time()
+    
+    def Whether_len_is_1_or_not(cell):
+        return len(cell.domain) == 1 and cell.value == '_'
+    
+    def Whether_len_is_2_or_not(cell):
+        return len(cell.domain) == 2 and cell.value == '_'
+    
+    def MRV(state):
+        list_of_1s = []
+        list_of_2s = []
+        for row in state.board:
+            list_of_1s += list(filter(Whether_len_is_1_or_not, row))
+        if list_of_1s != []:
+            rand_int = random.randint(0, len(list_of_1s - 1))
+            return list_of_1s[rand_int]
+        for row in state.board:
+            list_of_2s += list(filter(Whether_len_is_2_or_not, row))
+        if list_of_2s != []:
+            rand_int = random.randint(0, len(list_of_2s - 1))
+            return list_of_2s[rand_int]
+        return 'failure'
+    
     def backTrack(state):  #implement backTrack and other csp functions in Binairo.py
         if check_termination(state):
             state.print_board()
