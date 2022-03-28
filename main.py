@@ -61,6 +61,11 @@ def main():
     def backTrack(state):  #implement backTrack and other csp functions in Binairo.py
         if check_termination(state):
             state.print_board()
+        
+        else:
+            var = MRV(state)
+            if var == 'failure':
+                return 'failure'
     end_time = time()
     print('time: ',end_time-start_time)
 
