@@ -66,6 +66,8 @@ def main():
             var = MRV(state)
             if var == 'failure':
                 return 'failure'
+            
+    list_of_deletions = [[] for i in range(size_puzzle**2)]
     end_time = time()
     print('time: ',end_time-start_time)
 
