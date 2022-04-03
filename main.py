@@ -58,6 +58,9 @@ def main():
             return list_of_2s[rand_int]
         return 'failure'
     
+    def LCV(state):
+        pass
+    
     def backTrack(state):  #implement backTrack and other csp functions in Binairo.py
         if check_termination(state):
             state.print_board()
