@@ -58,9 +58,12 @@ def main():
             return list_of_2s[rand_int]
         return 'failure'
     
-    def LCV(state):
-        pass
-    
+    def LCV(var):
+        value1_num_of_constraint_conflicts = 0
+        value2_num_of_constraint_conflicts = 0
+        for value in var.domain:
+            var.value = value
+            
     def backTrack(state):  #implement backTrack and other csp functions in Binairo.py
         if check_termination(state):
             state.print_board()
