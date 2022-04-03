@@ -59,8 +59,8 @@ def main():
         return 'failure'
     
     def LCV(var):
-        value1_num_of_constraint_conflicts = 0
-        value2_num_of_constraint_conflicts = 0
+        value1_num_of_constraint_violations = 0
+        value2_num_of_constraint_violations = 0
         for value in var.domain:
             var.value = value
             
