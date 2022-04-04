@@ -58,7 +58,18 @@ def main():
             return list_of_2s[rand_int]
         return 'failure'
     
-    def LCV(var):
+    def find_empty_cells(state):
+        empty_cells = []
+        for row in state.board:
+            for cell in row:
+                if cell.value == '_':
+                    empty_cells.append(cell)
+        return empty_cells
+    
+    def LCV(var, state):
+        if len(var.domain) == 1:
+            return var.domain[0]
+        
         value1_num_of_constraint_violations = 0
         value2_num_of_constraint_violations = 0
         for value in var.domain:
