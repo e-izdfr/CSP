@@ -88,6 +88,8 @@ def main():
         
         elif num_of_constraint_violations[0] < num_of_constraint_violations[1]:
             return var.domain[0]
+        
+        return var.domain[random.randint(1)]
             
     def backTrack(state):  #implement backTrack and other csp functions in Binairo.py
         if check_termination(state):
