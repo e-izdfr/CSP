@@ -70,10 +70,24 @@ def main():
         if len(var.domain) == 1:
             return var.domain[0]
         
-        value1_num_of_constraint_violations = 0
-        value2_num_of_constraint_violations = 0
+        num_of_constraint_violations = []
         for value in var.domain:
             var.value = value
+            
+            count = 0
+            for cell in find_empty_cells(state):
+                for v in cell.domain:
+                    cell.value = v
+                    if not is_consistent(state):
+                        count += 1    
+                cell.value = '_'
+            num_of_constraint_violations.append(count)
+        
+        if num_of_constraint_violations[0] > num_of_constraint_violations[1]:
+            return var.domain[1]
+        
+        elif num_of_constraint_violations[0] < num_of_constraint_violations[1]:
+            return var.domain[0]
             
     def backTrack(state):  #implement backTrack and other csp functions in Binairo.py
         if check_termination(state):
