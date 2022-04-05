@@ -100,6 +100,23 @@ def main():
             if var == 'failure':
                 return 'failure'
             
+            value = LCM(var, State)
+            var.value = value
+            if is_consistent(state):
+                pass
+            
+            try:
+                var.value = var.domain[1 - var.domain.index(value)]
+                if is_consistent(state):
+                    pass
+                
+                var.value = '_'
+                return 'failure'
+                
+            except:
+                var.value ='_'
+                return 'failure'
+            
     list_of_deletions = [[] for i in range(size_puzzle**2)]
     end_time = time()
     print('time: ',end_time-start_time)
