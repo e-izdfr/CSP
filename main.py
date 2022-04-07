@@ -183,7 +183,7 @@ def main():
             for cell in find_empty_cells(state):
                 for v in cell.domain:
                     cell.value = v
-                    if not is_consistent(state):
+                    if not is_consistent2(state):
                         count += 1    
                 cell.value = '_'
             num_of_constraint_violations.append(count)
