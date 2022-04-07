@@ -183,7 +183,7 @@ def main():
             for cell in find_empty_cells(state):
                 for v in cell.domain:
                     cell.value = v
-                    if not is_consistent2(state):
+                    if not is_consistant2(state):
                         count += 1    
                 cell.value = '_'
             num_of_constraint_violations.append(count)
@@ -205,7 +205,7 @@ def main():
             if var == 'failure':
                 return 'failure'
             
-            value = LCM(var, State)
+            value = LCV(var, State)
             var.value = value
             if is_consistent(state):
                 pass
