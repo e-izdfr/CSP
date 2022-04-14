@@ -195,6 +195,111 @@ def main():
             return var.domain[0]
         
         return var.domain[random.randint(1)]
+    
+    def forward_checking(var, cell, state):
+        if cell.x != var.x:
+            if state.board[cell.x][var.y].value.upper() == var.value.upper():
+                key = 0
+                for j in range(var.y) + range(var.y + 1, state.size):
+                    if state.board[cell.x][j].value.upper() != state.board[var.x][j].upper() or state.board[cell.x][j] == '_':
+                        key = 1
+                        break
+                    
+                if key == 0:
+                    return False
+            if cell.y != var.y:
+                if state.board[var.x][cell.y].value.upper() == var.value.upper():
+                    key = 0
+                    for i in range(var.x) + range(var.x + 1, state.size):
+                        if state.board[i][cell.y].value.upper() != state.board[i][var.y].upper() or state.board[i][cell.y] == '_':
+                            key = 1
+                            break
+                        
+                    if key == 0:
+                        return False
+            
+            else:
+                num_white_circles = 0
+                num_black_circles = 0
+                
+                for i in range(0, state.size):
+                    if(state.board[i][var.y].value.upper() == 'W'):
+                        num_white_circles += 1
+            
+                    if(state.board[i][var.y].value.upper() == 'B'):
+                        num_black_circles += 1
+                        
+                if num_white_circles > state.size / 2 or num_black_circles > state.size / 2:
+                    return False
+                
+                if cell.x == var.x - 2:
+                    if state.board[cell.x][var.y].value.upper() == state.board[var.x - 1][var.y].upper() and \
+                    state.board[var.x - 1][var.y].upper() == var.value.upper():
+                        return False
+                
+                elif cell.x == var.x - 1:
+                    if((state.board[var.x - 2][var.y].value.upper() == state.board[cell.x][var.y].upper() and \
+                        state.board[cell.x][var.y].upper() == var.value.upper()) or (state.board[cell.x][var.y].upper() == \
+                            var.value.upper() and var.value.upper() == state.board[var.x + 1][var.y].value.upper())):
+                        return False
+                
+                elif cell.x == var.x + 1:
+                    if((state.board[var.x - 1][var.y] == var.value.upper() and var.value.upper() == \
+                        state.board[cell.x][var.y].value.upper()) or (var.value.upper() == state.board[cell.x][var.y].value.upper() \
+                            and state.board[cell.x][var.y].value.upper() == state.board[var.x + 2][var.y].value.upper())):
+                        return False
+                
+                elif cell.x == var.x + 2:
+                    if(var.value.upper() == state.board[var.x + 1][var.y].value.upper() and \
+                        state.board[var.x + 1][var.y].value.upper() == state.board[cell.x][var.y].upper()):
+                        return False
+                        
+        else:
+            key = 0
+            for i in range(var.x) + range(var.x + 1, state.size):
+                if state.board[i][cell.y].value.upper() != state.board[i][var.y].upper() or state.board[i][cell.y] == '_':
+                    key = 1
+                    break
+                
+            if key == 0:
+                return False
+            
+            num_white_circles = 0
+            num_black_circles = 0
+            
+            for j in range(0, state.size):
+                if(state.board[var.x][j].value.upper() == 'W'):
+                    num_white_circles += 1
+            
+                if(state.board[var.x][j].value.upper() == 'B'):
+                    num_black_circles += 1
+                        
+            if num_white_circles > state.size / 2 or num_black_circles > state.size / 2:
+                return False
+            
+            if cell.y == var.y - 2:
+                if state.board[var.x][cell.y].value.upper() == state.board[var.x][var.y - 1].upper() and \
+                    state.board[var.x][var.y - 1].upper() == var.value.upper():
+                        return False
+                
+            elif cell.y == var.y - 1:
+                if((state.board[var.x][var.y - 2].value.upper() == state.board[var.x][cell.y].upper() and \
+                    state.board[var.x][cell.y].upper() == var.value.upper()) or (state.board[var.x][cell.y].upper() == \
+                        var.value.upper() and var.value.upper() == state.board[var.x][var.y + 1].value.upper())):
+                    return False
+                
+            elif cell.y == var.y + 1:
+                if((state.board[var.x][var.y - 1] == var.value.upper() and var.value.upper() == \
+                    state.board[var.x][cell.y].value.upper()) or (var.value.upper() == state.board[var.x][cell.y].value.upper() and \
+                        state.board[var.x][cell.y].value.upper() == state.board[var.x][var.y + 2].value.upper())):
+                    return False
+                
+            elif cell.y == var.y + 2:
+                if(var.value.upper() == state.board[var.x][var.y + 1].value.upper() and state.board[var.x][var.y + 1].value.upper() == \
+                    state.board[var.x][cell.y].upper()):
+                    return False
+                
+        return True
             
     def backTrack(state):  #implement backTrack and other csp functions in Binairo.py
         if check_termination(state):
