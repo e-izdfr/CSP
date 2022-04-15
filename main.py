@@ -3,6 +3,7 @@ from Binairo import *
 from Cell import *
 from State import *
 import random
+import traceback
 ## w b
 
 def main():
@@ -302,6 +303,7 @@ def main():
         return True
             
     def backTrack(state):  #implement backTrack and other csp functions in Binairo.py
+        key = 1
         if check_termination(state):
             state.print_board()
         
@@ -313,12 +315,82 @@ def main():
             value = LCV(var, State)
             var.value = value
             if is_consistent(state):
-                pass
+                for cell in find_empty_cells(state):
+                    for v in cell.domain:
+                        cell.value = v
+                        if not forward_checking(var, cell, state):
+                            cell.domain.remove(v)
+                            traceback.format_stack()[-1] = f'{cell.x}{cell.y}{v}' + traceback.format_stack()[-1]
+                            
+                            if len(cell.domain) == 0:
+                                key = 0
+                                break
+                    
+                    if key == 0:
+                        break
+                    
+                    traceback.format_stack()[-1] = '$' + traceback.format_stack()[-1]
+                    cell.value = '_' 
+                    
+                result = backTrack(state)
+                if result != 'failure':
+                    return result
+                
+            for i in traceback.format_stack()[-1].split('$')[1:-1]:
+                if len(i) == 3:
+                    state.board[int(i[0])][int(i[1])].domain.append(i[2])
+                    
+                elif len(i) == 4:
+                    state.board[int(i[0])][int(i[1])].domain.extend([i[2], i[3]])
+                    
+            s = traceback.format_stack()[-1].split('$')[-1]
+            if s[0] != '':
+                if s[3] == '':
+                    state.board[int(s[0])][int(s[1])].domain.append(s[2])
+                
+                else:
+                    state.board[int(s[0])][int(s[1])].domain.extend([s[2], s[3]])
+                 
+            var.value = '_'
             
             try:
                 var.value = var.domain[1 - var.domain.index(value)]
                 if is_consistent(state):
-                    pass
+                    for cell in find_empty_cells(state):
+                        for v in cell.domain:
+                            cell.value = v
+                            if not forward_checking(var, cell, state):
+                                cell.domain.remove(v)
+                                traceback.format_stack()[-1] = f'{cell.x}{cell.y}{v}' + traceback.format_stack()[-1]
+                                
+                                if len(cell.domain) == 0:
+                                    key = 0
+                                    break
+                    
+                        if key == 0:
+                            break
+                    
+                    traceback.format_stack()[-1] = '$' + traceback.format_stack()[-1]
+                    cell.value = '_' 
+                    
+                result = backTrack(state)
+                if result != 'failure':
+                    return result
+                
+                for i in traceback.format_stack()[-1].split('$')[1:-1]:
+                    if len(i) == 3:
+                        state.board[int(i[0])][int(i[1])].domain.append(i[2])
+                        
+                    elif len(i) == 4:
+                        state.board[int(i[0])][int(i[1])].domain.extend([i[2], i[3]])
+                        
+                s = traceback.format_stack()[-1].split('$')[-1]
+                if s[0] != '':
+                    if s[3] == '':
+                        state.board[int(s[0])][int(s[1])].domain.append(s[2])
+                        
+                    else:
+                        state.board[int(s[0])][int(s[1])].domain.extend([s[2], s[3]])
                 
                 var.value = '_'
                 return 'failure'
