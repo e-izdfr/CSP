@@ -38,6 +38,9 @@ def main():
     state.print_board()
     start_time = time()
     
+    def Whether_len_is_0_or_not(cell):
+        return len(cell.domain) == 0 and cell.value == '_'
+    
     def Whether_len_is_1_or_not(cell):
         return len(cell.domain) == 1 and cell.value == '_'
     
