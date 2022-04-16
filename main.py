@@ -36,7 +36,6 @@ def main():
     state = State(size_puzzle, board)  
     print('initial board:')
     state.print_board()
-    start_time = time()
     
     def Whether_len_is_0_or_not(cell):
         return len(cell.domain) == 0 and cell.value == '_'
@@ -406,6 +405,7 @@ def main():
                 var.value ='_'
                 return 'failure'
             
+    start_time = time()       
     end_time = time()
     print('time: ',end_time-start_time)
 
