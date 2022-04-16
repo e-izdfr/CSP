@@ -47,9 +47,10 @@ def main():
         return len(cell.domain) == 2 and cell.value == '_'
     
     def MRV(state):
+        list_of_0s = []
         for row in state.board:
-            list_of_1s += list(filter(Whether_len_is_0_or_not, row))
-        if len(list_of_1s) != 0:
+            list_of_0s += list(filter(Whether_len_is_0_or_not, row))
+        if len(list_of_0s) != 0:
             return 'failure'
         list_of_1s = []
         list_of_2s = []
