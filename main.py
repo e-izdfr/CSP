@@ -405,7 +405,10 @@ def main():
                 var.value ='_'
                 return 'failure'
             
-    start_time = time()       
+    start_time = time()
+    result = backTrack(state) 
+    if result == 'failure':
+        print('No solution exists.')   
     end_time = time()
     print('time: ',end_time-start_time)
 
