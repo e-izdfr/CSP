@@ -57,12 +57,12 @@ def main():
         for row in state.board:
             list_of_1s += list(filter(Whether_len_is_1_or_not, row))
         if list_of_1s != []:
-            rand_int = random.randint(0, len(list_of_1s - 1))
+            rand_int = random.randint(0, len(list_of_1s) - 1)
             return list_of_1s[rand_int]
         for row in state.board:
             list_of_2s += list(filter(Whether_len_is_2_or_not, row))
         if list_of_2s != []:
-            rand_int = random.randint(0, len(list_of_2s - 1))
+            rand_int = random.randint(0, len(list_of_2s) - 1)
             return list_of_2s[rand_int]
         return 'failure'
     
@@ -78,8 +78,9 @@ def main():
         if cell.x != var.x:
             if state.board[cell.x][var.y].value.upper() == var.value.upper():
                 key = 0
-                for j in range(var.y) + range(var.y + 1, state.size):
-                    if state.board[cell.x][j].value.upper() != state.board[var.x][j].upper() or state.board[cell.x][j] == '_':
+                for j in [x0 for x0 in range(state.size) if x0 != var.y]:
+                    if state.board[cell.x][j].value.upper() != state.board[var.x][j].value.upper() or state.board[cell.x][j].value\
+                    == '_':
                         key = 1
                         break
                     
@@ -88,8 +89,9 @@ def main():
             if cell.y != var.y:
                 if state.board[var.x][cell.y].value.upper() == var.value.upper():
                     key = 0
-                    for i in range(var.x) + range(var.x + 1, state.size):
-                        if state.board[i][cell.y].value.upper() != state.board[i][var.y].upper() or state.board[i][cell.y] == '_':
+                    for i in [x0 for x0 in range(state.size) if x0 != var.x]:
+                        if state.board[i][cell.y].value.upper() != state.board[i][var.y].value.upper() or state.board[i][cell.y].value\
+                        == '_':
                             key = 1
                             break
                         
@@ -111,31 +113,53 @@ def main():
                     return False
                 
                 if cell.x == var.x - 2:
-                    if state.board[cell.x][var.y].value.upper() == state.board[var.x - 1][var.y].upper() and \
-                    state.board[var.x - 1][var.y].upper() == var.value.upper():
+                    if state.board[cell.x][var.y].value.upper() == state.board[var.x - 1][var.y].value.upper() and \
+                    state.board[var.x - 1][var.y].value.upper() == var.value.upper():
                         return False
                 
                 elif cell.x == var.x - 1:
-                    if((state.board[var.x - 2][var.y].value.upper() == state.board[cell.x][var.y].upper() and \
-                        state.board[cell.x][var.y].upper() == var.value.upper()) or (state.board[cell.x][var.y].upper() == \
-                            var.value.upper() and var.value.upper() == state.board[var.x + 1][var.y].value.upper())):
-                        return False
+                    try:
+                        if(state.board[var.x - 2][var.y].value.upper() == state.board[cell.x][var.y].value.upper() and \
+                            state.board[cell.x][var.y].value.upper() == var.value.upper()):
+                            return False
+                        
+                    except:
+                        pass
+                    
+                    try:
+                        if(state.board[cell.x][var.y].value.upper() == var.value.upper() and var.value.upper() ==\
+                           state.board[var.x + 1][var.y].value.upper()):
+                            return False
+                        
+                    except:
+                        pass
                 
                 elif cell.x == var.x + 1:
-                    if((state.board[var.x - 1][var.y] == var.value.upper() and var.value.upper() == \
-                        state.board[cell.x][var.y].value.upper()) or (var.value.upper() == state.board[cell.x][var.y].value.upper() \
-                            and state.board[cell.x][var.y].value.upper() == state.board[var.x + 2][var.y].value.upper())):
-                        return False
+                    try:
+                        if(state.board[var.x - 1][var.y] == var.value.upper() and var.value.upper() == \
+                            state.board[cell.x][var.y].value.upper()):
+                            return False
+                    
+                    except:
+                        pass
+                    
+                    try:
+                        if(var.value.upper() == state.board[cell.x][var.y].value.upper() and state.board[cell.x][var.y].value.upper() ==\
+                            state.board[var.x + 2][var.y].value.upper()):
+                            return False
+                        
+                    except:
+                        pass
                 
                 elif cell.x == var.x + 2:
                     if(var.value.upper() == state.board[var.x + 1][var.y].value.upper() and \
-                        state.board[var.x + 1][var.y].value.upper() == state.board[cell.x][var.y].upper()):
+                        state.board[var.x + 1][var.y].value.upper() == state.board[cell.x][var.y].value.upper()):
                         return False
                         
         else:
             key = 0
-            for i in range(var.x) + range(var.x + 1, state.size):
-                if state.board[i][cell.y].value.upper() != state.board[i][var.y].upper() or state.board[i][cell.y] == '_':
+            for i in [x0 for x0 in range(state.size) if x0 != var.x]:
+                if state.board[i][cell.y].value.upper() != state.board[i][var.y].value.upper() or state.board[i][cell.y].value == '_':
                     key = 1
                     break
                 
@@ -156,25 +180,47 @@ def main():
                 return False
             
             if cell.y == var.y - 2:
-                if state.board[var.x][cell.y].value.upper() == state.board[var.x][var.y - 1].upper() and \
-                    state.board[var.x][var.y - 1].upper() == var.value.upper():
+                if state.board[var.x][cell.y].value.upper() == state.board[var.x][var.y - 1].value.upper() and \
+                    state.board[var.x][var.y - 1].value.upper() == var.value.upper():
                         return False
                 
             elif cell.y == var.y - 1:
-                if((state.board[var.x][var.y - 2].value.upper() == state.board[var.x][cell.y].upper() and \
-                    state.board[var.x][cell.y].upper() == var.value.upper()) or (state.board[var.x][cell.y].upper() == \
-                        var.value.upper() and var.value.upper() == state.board[var.x][var.y + 1].value.upper())):
-                    return False
+                try:
+                    if(state.board[var.x - 2][var.y].value.upper() == state.board[cell.x][var.y].value.upper() and \
+                        state.board[cell.x][var.y].value.upper() == var.value.upper()):
+                        return False
+                        
+                except:
+                    pass
+                    
+                try:
+                    if(state.board[cell.x][var.y].value.upper() == var.value.upper() and var.value.upper() ==\
+                        state.board[var.x + 1][var.y].value.upper()):
+                        return False
+                        
+                except:
+                    pass
                 
             elif cell.y == var.y + 1:
-                if((state.board[var.x][var.y - 1] == var.value.upper() and var.value.upper() == \
-                    state.board[var.x][cell.y].value.upper()) or (var.value.upper() == state.board[var.x][cell.y].value.upper() and \
-                        state.board[var.x][cell.y].value.upper() == state.board[var.x][var.y + 2].value.upper())):
-                    return False
+                try:
+                    if(state.board[var.x - 1][var.y] == var.value.upper() and var.value.upper() == 
+                       state.board[cell.x][var.y].value.upper()):
+                        return False
+                    
+                except:
+                    pass
+                    
+                try:
+                    if(var.value.upper() == state.board[cell.x][var.y].value.upper() and state.board[cell.x][var.y].value.upper() ==\
+                        state.board[var.x + 2][var.y].value.upper()):
+                        return False
+                        
+                except:
+                    pass
                 
             elif cell.y == var.y + 2:
                 if(var.value.upper() == state.board[var.x][var.y + 1].value.upper() and state.board[var.x][var.y + 1].value.upper() == \
-                    state.board[var.x][cell.y].upper()):
+                    state.board[var.x][cell.y].value.upper()):
                     return False
                 
         return True
@@ -202,14 +248,15 @@ def main():
         elif num_of_constraint_violations[0] < num_of_constraint_violations[1]:
             return var.domain[0]
         
-        return var.domain[random.randint(1)]
+        return var.domain[random.randint(0, 1)]
     
     def forward_checking(var, cell, state):
         if cell.x != var.x:
             if state.board[cell.x][var.y].value.upper() == var.value.upper():
                 key = 0
-                for j in range(var.y) + range(var.y + 1, state.size):
-                    if state.board[cell.x][j].value.upper() != state.board[var.x][j].upper() or state.board[cell.x][j] == '_':
+                for j in [x0 for x0 in range(state.size) if x0 != var.y]:
+                    if state.board[cell.x][j].value.upper() != state.board[var.x][j].value.upper() or state.board[cell.x][j].value\
+                    == '_':
                         key = 1
                         break
                     
@@ -218,8 +265,9 @@ def main():
             if cell.y != var.y:
                 if state.board[var.x][cell.y].value.upper() == var.value.upper():
                     key = 0
-                    for i in range(var.x) + range(var.x + 1, state.size):
-                        if state.board[i][cell.y].value.upper() != state.board[i][var.y].upper() or state.board[i][cell.y] == '_':
+                    for i in [x0 for x0 in range(state.size) if x0 != var.x]:
+                        if state.board[i][cell.y].value.upper() != state.board[i][var.y].value.upper() or state.board[i][cell.y].value\
+                        == '_':
                             key = 1
                             break
                         
@@ -241,31 +289,53 @@ def main():
                     return False
                 
                 if cell.x == var.x - 2:
-                    if state.board[cell.x][var.y].value.upper() == state.board[var.x - 1][var.y].upper() and \
-                    state.board[var.x - 1][var.y].upper() == var.value.upper():
+                    if state.board[cell.x][var.y].value.upper() == state.board[var.x - 1][var.y].value.upper() and \
+                    state.board[var.x - 1][var.y].value.upper() == var.value.upper():
                         return False
                 
                 elif cell.x == var.x - 1:
-                    if((state.board[var.x - 2][var.y].value.upper() == state.board[cell.x][var.y].upper() and \
-                        state.board[cell.x][var.y].upper() == var.value.upper()) or (state.board[cell.x][var.y].upper() == \
-                            var.value.upper() and var.value.upper() == state.board[var.x + 1][var.y].value.upper())):
-                        return False
+                    try:
+                        if(state.board[var.x - 2][var.y].value.upper() == state.board[cell.x][var.y].value.upper() and \
+                            state.board[cell.x][var.y].value.upper() == var.value.upper()):
+                            return False
+                        
+                    except:
+                        pass
+                    
+                    try:
+                        if(state.board[cell.x][var.y].value.upper() == var.value.upper() and var.value.upper() ==\
+                           state.board[var.x + 1][var.y].value.upper()):
+                            return False
+                        
+                    except:
+                        pass
                 
                 elif cell.x == var.x + 1:
-                    if((state.board[var.x - 1][var.y] == var.value.upper() and var.value.upper() == \
-                        state.board[cell.x][var.y].value.upper()) or (var.value.upper() == state.board[cell.x][var.y].value.upper() \
-                            and state.board[cell.x][var.y].value.upper() == state.board[var.x + 2][var.y].value.upper())):
-                        return False
+                    try:
+                        if(state.board[var.x - 1][var.y] == var.value.upper() and var.value.upper() == \
+                            state.board[cell.x][var.y].value.upper()):
+                            return False
+                    
+                    except:
+                        pass
+                    
+                    try:
+                        if(var.value.upper() == state.board[cell.x][var.y].value.upper() and state.board[cell.x][var.y].value.upper() ==\
+                            state.board[var.x + 2][var.y].value.upper()):
+                            return False
+                        
+                    except:
+                        pass
                 
                 elif cell.x == var.x + 2:
                     if(var.value.upper() == state.board[var.x + 1][var.y].value.upper() and \
-                        state.board[var.x + 1][var.y].value.upper() == state.board[cell.x][var.y].upper()):
+                        state.board[var.x + 1][var.y].value.upper() == state.board[cell.x][var.y].value.upper()):
                         return False
                         
         else:
             key = 0
-            for i in range(var.x) + range(var.x + 1, state.size):
-                if state.board[i][cell.y].value.upper() != state.board[i][var.y].upper() or state.board[i][cell.y] == '_':
+            for i in [x0 for x0 in range(state.size) if x0 != var.x]:
+                if state.board[i][cell.y].value.upper() != state.board[i][var.y].value.upper() or state.board[i][cell.y].value == '_':
                     key = 1
                     break
                 
@@ -286,25 +356,47 @@ def main():
                 return False
             
             if cell.y == var.y - 2:
-                if state.board[var.x][cell.y].value.upper() == state.board[var.x][var.y - 1].upper() and \
-                    state.board[var.x][var.y - 1].upper() == var.value.upper():
+                if state.board[var.x][cell.y].value.upper() == state.board[var.x][var.y - 1].value.upper() and \
+                    state.board[var.x][var.y - 1].value.upper() == var.value.upper():
                         return False
                 
             elif cell.y == var.y - 1:
-                if((state.board[var.x][var.y - 2].value.upper() == state.board[var.x][cell.y].upper() and \
-                    state.board[var.x][cell.y].upper() == var.value.upper()) or (state.board[var.x][cell.y].upper() == \
-                        var.value.upper() and var.value.upper() == state.board[var.x][var.y + 1].value.upper())):
-                    return False
+                try:
+                    if(state.board[var.x - 2][var.y].value.upper() == state.board[cell.x][var.y].value.upper() and \
+                        state.board[cell.x][var.y].value.upper() == var.value.upper()):
+                        return False
+                        
+                except:
+                    pass
+                    
+                try:
+                    if(state.board[cell.x][var.y].value.upper() == var.value.upper() and var.value.upper() ==\
+                        state.board[var.x + 1][var.y].value.upper()):
+                        return False
+                        
+                except:
+                    pass
                 
             elif cell.y == var.y + 1:
-                if((state.board[var.x][var.y - 1] == var.value.upper() and var.value.upper() == \
-                    state.board[var.x][cell.y].value.upper()) or (var.value.upper() == state.board[var.x][cell.y].value.upper() and \
-                        state.board[var.x][cell.y].value.upper() == state.board[var.x][var.y + 2].value.upper())):
-                    return False
+                try:
+                    if(state.board[var.x - 1][var.y] == var.value.upper() and var.value.upper() == \
+                        state.board[cell.x][var.y].value.upper()):
+                        return False
+                    
+                except:
+                    pass
+                    
+                try:
+                    if(var.value.upper() == state.board[cell.x][var.y].value.upper() and state.board[cell.x][var.y].value.upper() ==\
+                        state.board[var.x + 2][var.y].value.upper()):
+                        return False
+                        
+                except:
+                    pass
                 
             elif cell.y == var.y + 2:
                 if(var.value.upper() == state.board[var.x][var.y + 1].value.upper() and state.board[var.x][var.y + 1].value.upper() == \
-                    state.board[var.x][cell.y].upper()):
+                    state.board[var.x][cell.y].value.upper()):
                     return False
                 
         return True
@@ -319,7 +411,7 @@ def main():
             if var == 'failure':
                 return 'failure'
             
-            value = LCV(var, State)
+            value = LCV(var, state)
             var.value = value
             if is_consistent(state):
                 for cell in find_empty_cells(state):
@@ -351,12 +443,13 @@ def main():
                     state.board[int(i[0])][int(i[1])].domain.extend([i[2], i[3]])
                     
             s = traceback.format_stack()[-1].split('$')[-1]
-            if s[0] != '':
-                if s[3] == '':
+            if s[0] != ' ':
+                if s[3] == ' ':
                     state.board[int(s[0])][int(s[1])].domain.append(s[2])
                 
                 else:
-                    state.board[int(s[0])][int(s[1])].domain.extend([s[2], s[3]])
+                    #state.board[int(s[0])][int(s[1])].domain.extend([s[2], s[3]])
+                    print(traceback.format_stack())
                  
             var.value = '_'
             
@@ -378,7 +471,8 @@ def main():
                             break
                     
                     traceback.format_stack()[-1] = '$' + traceback.format_stack()[-1]
-                    cell.value = '_' 
+                    print(traceback.format_stack())
+                    cell.value = '_'
                     
                 result = backTrack(state)
                 if result != 'failure':
