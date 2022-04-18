@@ -8,8 +8,8 @@ import traceback
 
 def main():
     input_numbers = []  ## first row = size of puzzle(n)  ## second row = number of cells that have color in the statrt  (m)  ## row 3 to row 3+m : 
-    input = open('input2.txt').readlines()
-    for line in input:
+    Input = open('input2.txt').readlines()
+    for line in Input:
         line = line.rstrip()
         numbers = line.split(' ')
         n = [int(number) for number in numbers]
@@ -64,7 +64,6 @@ def main():
         if list_of_2s != []:
             rand_int = random.randint(0, len(list_of_2s) - 1)
             return list_of_2s[rand_int]
-        return 'failure'
     
     def find_empty_cells(state):
         empty_cells = []
@@ -136,7 +135,7 @@ def main():
                 
                 elif cell.x == var.x + 1:
                     try:
-                        if(state.board[var.x - 1][var.y] == var.value.upper() and var.value.upper() == \
+                        if(state.board[var.x - 1][var.y].value.upper() == var.value.upper() and var.value.upper() == \
                             state.board[cell.x][var.y].value.upper()):
                             return False
                     
@@ -157,14 +156,15 @@ def main():
                         return False
                         
         else:
-            key = 0
-            for i in [x0 for x0 in range(state.size) if x0 != var.x]:
-                if state.board[i][cell.y].value.upper() != state.board[i][var.y].value.upper() or state.board[i][cell.y].value == '_':
-                    key = 1
-                    break
-                
-            if key == 0:
-                return False
+            if state.board[var.x][cell.y].value.upper() == var.value.upper():
+                key = 0
+                for i in [x0 for x0 in range(state.size) if x0 != var.x]:
+                    if state.board[i][cell.y].value.upper() != state.board[i][var.y].value.upper() or state.board[i][cell.y].value == '_':
+                        key = 1
+                        break
+                    
+                if key == 0:
+                    return False
             
             num_white_circles = 0
             num_black_circles = 0
@@ -186,16 +186,16 @@ def main():
                 
             elif cell.y == var.y - 1:
                 try:
-                    if(state.board[var.x - 2][var.y].value.upper() == state.board[cell.x][var.y].value.upper() and \
-                        state.board[cell.x][var.y].value.upper() == var.value.upper()):
+                    if(state.board[var.x][var.y - 2].value.upper() == state.board[var.x][cell.y].value.upper() and \
+                        state.board[var.x][cell.y].value.upper() == var.value.upper()):
                         return False
                         
                 except:
                     pass
                     
                 try:
-                    if(state.board[cell.x][var.y].value.upper() == var.value.upper() and var.value.upper() ==\
-                        state.board[var.x + 1][var.y].value.upper()):
+                    if(state.board[var.x][cell.y].value.upper() == var.value.upper() and var.value.upper() ==\
+                        state.board[var.x][var.y + 1].value.upper()):
                         return False
                         
                 except:
@@ -203,16 +203,16 @@ def main():
                 
             elif cell.y == var.y + 1:
                 try:
-                    if(state.board[var.x - 1][var.y] == var.value.upper() and var.value.upper() == 
-                       state.board[cell.x][var.y].value.upper()):
+                    if(state.board[var.x][var.y - 1].value.upper() == var.value.upper() and var.value.upper() == 
+                       state.board[var.x][cell.y].value.upper()):
                         return False
                     
                 except:
                     pass
                     
                 try:
-                    if(var.value.upper() == state.board[cell.x][var.y].value.upper() and state.board[cell.x][var.y].value.upper() ==\
-                        state.board[var.x + 2][var.y].value.upper()):
+                    if(var.value.upper() == state.board[var.x][cell.y].value.upper() and state.board[var.x][cell.y].value.upper() ==\
+                        state.board[var.x][var.y + 2].value.upper()):
                         return False
                         
                 except:
@@ -312,7 +312,7 @@ def main():
                 
                 elif cell.x == var.x + 1:
                     try:
-                        if(state.board[var.x - 1][var.y] == var.value.upper() and var.value.upper() == \
+                        if(state.board[var.x - 1][var.y].value.upper() == var.value.upper() and var.value.upper() == \
                             state.board[cell.x][var.y].value.upper()):
                             return False
                     
@@ -333,14 +333,15 @@ def main():
                         return False
                         
         else:
-            key = 0
-            for i in [x0 for x0 in range(state.size) if x0 != var.x]:
-                if state.board[i][cell.y].value.upper() != state.board[i][var.y].value.upper() or state.board[i][cell.y].value == '_':
-                    key = 1
-                    break
-                
-            if key == 0:
-                return False
+            if state.board[var.x][cell.y].value.upper() == var.value.upper():
+                key = 0
+                for i in [x0 for x0 in range(state.size) if x0 != var.x]:
+                    if state.board[i][cell.y].value.upper() != state.board[i][var.y].value.upper() or state.board[i][cell.y].value == '_':
+                        key = 1
+                        break
+                    
+                if key == 0:
+                    return False
             
             num_white_circles = 0
             num_black_circles = 0
@@ -362,16 +363,16 @@ def main():
                 
             elif cell.y == var.y - 1:
                 try:
-                    if(state.board[var.x - 2][var.y].value.upper() == state.board[cell.x][var.y].value.upper() and \
-                        state.board[cell.x][var.y].value.upper() == var.value.upper()):
+                    if(state.board[var.x][var.y - 2].value.upper() == state.board[var.x][cell.y].value.upper() and \
+                        state.board[var.x][cell.y].value.upper() == var.value.upper()):
                         return False
                         
                 except:
                     pass
                     
                 try:
-                    if(state.board[cell.x][var.y].value.upper() == var.value.upper() and var.value.upper() ==\
-                        state.board[var.x + 1][var.y].value.upper()):
+                    if(state.board[var.x][cell.y].value.upper() == var.value.upper() and var.value.upper() ==\
+                        state.board[var.x][var.y + 1].value.upper()):
                         return False
                         
                 except:
@@ -379,16 +380,16 @@ def main():
                 
             elif cell.y == var.y + 1:
                 try:
-                    if(state.board[var.x - 1][var.y] == var.value.upper() and var.value.upper() == \
-                        state.board[cell.x][var.y].value.upper()):
+                    if(state.board[var.x][var.y - 1].value.upper() == var.value.upper() and var.value.upper() == 
+                       state.board[var.x][cell.y].value.upper()):
                         return False
                     
                 except:
                     pass
                     
                 try:
-                    if(var.value.upper() == state.board[cell.x][var.y].value.upper() and state.board[cell.x][var.y].value.upper() ==\
-                        state.board[var.x + 2][var.y].value.upper()):
+                    if(var.value.upper() == state.board[var.x][cell.y].value.upper() and state.board[var.x][cell.y].value.upper() ==\
+                        state.board[var.x][var.y + 2].value.upper()):
                         return False
                         
                 except:
@@ -426,25 +427,27 @@ def main():
                                 key = 0
                                 break
                     
+                    cell.value = '_'
+                    
                     if key == 0:
-                        break
+                        break 
                     
-                    cell.value = '_' 
-                    
-                result = backTrack(state)
-                if result != 'failure':
-                    return result
+                if key == 1:
+                    result = backTrack(state)
+                    if result != 'failure':
+                        return result
                 
-            for i in s:
-                if len(i) == 3:
-                    state.board[int(i[0])][int(i[1])].domain.append(i[2])
-                    
-                elif len(i) == 4:
-                    state.board[int(i[0])][int(i[1])].domain.extend([i[2], i[3]])
+                for i in s:
+                    if len(i) == 3:
+                        state.board[int(i[0])][int(i[1])].domain.append(i[2])
+                        
+                    elif len(i) == 4:
+                        state.board[int(i[0])][int(i[1])].domain.extend([i[2], i[3]])
                  
             var.value = '_'
             
             try:
+                key = 1
                 var.value = var.domain[1 - var.domain.index(value)]
                 if is_consistent(state):
                     s = set()
@@ -459,21 +462,22 @@ def main():
                                     key = 0
                                     break
                     
+                        cell.value = '_'
+                        
                         if key == 0:
                             break
                     
-                    cell.value = '_'
+                    if key == 1:
+                        result = backTrack(state)
+                        if result != 'failure':
+                            return result
                     
-                result = backTrack(state)
-                if result != 'failure':
-                    return result
-                
-                for i in s:
-                    if len(i) == 3:
-                        state.board[int(i[0])][int(i[1])].domain.append(i[2])
-                        
-                    elif len(i) == 4:
-                        state.board[int(i[0])][int(i[1])].domain.extend([i[2], i[3]])
+                    for i in s:
+                        if len(i) == 3:
+                            state.board[int(i[0])][int(i[1])].domain.append(i[2])
+                            
+                        elif len(i) == 4:
+                            state.board[int(i[0])][int(i[1])].domain.extend([i[2], i[3]])
                         
                 var.value = '_'
                 return 'failure'
