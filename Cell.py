@@ -1,7 +1,10 @@
 ## each cell in puzzle
 class Cell:
-    def __init__(self, x, y, domain=['w', 'b'], value='_'):
+    def __init__(self, x, y, domain=None, value='_'):
+        if domain is None:
+            self.domain = ['w', 'b']
+        else:
+            self.domain = domain
         self.x = x
         self.y = y
-        self.domain = domain
         self.value = value
