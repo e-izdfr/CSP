@@ -1,9 +1,13 @@
 from Cell import *
 
 class State:
-    def __init__(self, size, board=[]):
-        self.board = board
-        self.size = size
+    def __init__(self, size, board=None):
+        if board is None:
+            self.board = []
+            self.size = size
+        else:
+            self.board = board
+            self.size = size
       
     def print_domain(self):
         for i in range(0, self.size):
