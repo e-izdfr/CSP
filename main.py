@@ -6,7 +6,7 @@ import random
 ## w b
 
 def main():
-    input_numbers = []  ## first row = size of puzzle(n)  ## second row = number of cells that have color in the statrt  (m)  ## row 3 to row 3+m : 
+    input_numbers = []  ## first row = size of puzzle(n)  ## second row = number of cells that have color in the start  (m)  ## row 3 to row 3+m : 
     Input = open('input2.txt').readlines()
     for line in Input:
         line = line.rstrip()
@@ -410,7 +410,7 @@ def main():
     def find_empty_row_cells(row):
         return list(filter(lambda x: x.value == '_', row))
     
-    def AC3(state):
+    def AC3(state):  #AC3 is incomplete.
         for row in state.board:
             for cell in find_empty_cells(row):
                 for value in cell.domain:
@@ -656,7 +656,7 @@ def main():
                             c.value = '_'
         return True
         
-    def backTrack(state):  #implement backTrack and other csp functions in Binairo.py
+    def backTrack(state):  #Implementing backTrack and other csp functions in Binairo.py
         key = 1
         if check_termination(state):
             state.print_board()

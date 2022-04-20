@@ -91,10 +91,10 @@ def is_unique(state : State): # checks if all rows are unique && checks if all c
    
     return True
 
-def is_assignment_complete(state : State): # check if all variables are assigned or not
+def is_assignment_complete(state : State): # Checking if all variables are assigned or not
     for i in range(0, state.size):
         for j in range(0, state.size):
-            if(state.board[i][j].value == '_'): # exists a variable wich is not assigned (empty '_')
+            if(state.board[i][j].value == '_'): # exists a variable which is not assigned (empty '_')
                 return False
 
     return True
