@@ -583,31 +583,31 @@ def main():
                     except:
                         pass  
                     
-                    if len(list(filter(Whether_cell_is_colorful_or_not(color=cell.value), row))) > state.size / 2:
+                    if len(list(filter(Whether_cell_is_colorful_or_not, cell.value, row))) > state.size / 2:
                         cell.domain.remove(cell.value)
                         if cell.domain == []:
                             return False
                         
-                    elif len(list(filter(Whether_cell_is_colorful_or_not(color=cell.value), find_empty_row_cells(row)))) < state.size -\
-                    len(list(filter(Whether_cell_is_colorful_or_not(color=cell.value), row))) or\
-                    len(list(filter(Whether_cell_is_colorful_or_not(color=['b', 'w'].remove(cell.value))[0],
+                    elif len(list(filter(Whether_cell_is_colorful_or_not, cell.value, find_empty_row_cells(row)))) < state.size -\
+                    len(list(filter(Whether_cell_is_colorful_or_not, cell.value, row))) or\
+                    len(list(filter(Whether_cell_is_colorful_or_not, [x for x in ['b', 'w'] if x != cell.value][0],
                                     find_empty_row_cells(row)))) < state.size -\
-                    len(list(filter(Whether_cell_is_colorful_or_not(color=['b', 'w'].remove(cell.value))[0], row))):
+                    len(list(filter(Whether_cell_is_colorful_or_not, [x for x in ['b', 'w'] if x != cell.value][0], row))):
                         cell.domain.remove(cell.value)
                         if cell.domain == []:
                             return False
                         
                     col = [state.board[i][cell.y] for i in range(state.size)]
-                    if len(list(filter(Whether_cell_is_colorful_or_not(color=cell.value), col))) > state.size / 2:
+                    if len(list(filter(Whether_cell_is_colorful_or_not, cell.value, col))) > state.size / 2:
                         cell.domain.remove(cell.value)
                         if cell.domain == []:
                             return False
                         
-                    elif len(list(filter(Whether_cell_is_colorful_or_not(color=cell.value), find_empty_row_cells(col)))) < state.size -\
-                    len(list(filter(Whether_cell_is_colorful_or_not(color=cell.value), col))) or\
-                    len(list(filter(Whether_cell_is_colorful_or_not(color=['b', 'w'].remove(cell.value))[0],
+                    elif len(list(filter(Whether_cell_is_colorful_or_not, cell.value, find_empty_row_cells(col)))) < state.size -\
+                    len(list(filter(Whether_cell_is_colorful_or_not, cell.value, col))) or\
+                    len(list(filter(Whether_cell_is_colorful_or_not, [x for x in ['b', 'w'] if x != cell.value][0],
                                     find_empty_row_cells(col)))) < state.size -\
-                    len(list(filter(Whether_cell_is_colorful_or_not(color=['b', 'w'].remove(cell.value))[0], col))):
+                    len(list(filter(Whether_cell_is_colorful_or_not, [x for x in ['b', 'w'] if x != cell.value][0], col))):
                         cell.domain.remove(cell.value)
                         if cell.domain == []:
                             return False
