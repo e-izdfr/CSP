@@ -402,6 +402,261 @@ def main():
                 
         return True
             
+    def Whether_cell_is_assigned_or_not(cell):
+        return cell.domain == ['n']
+    
+    def Whether_cell_is_colorful_or_not(cell, color):
+        return cell.value.lower() == color
+    
+    def find_empty_row_cells(row):
+        return list(filter(lambda x: x.value == '_', row))
+    
+    def AC3(state):
+        for row in state.board:
+            for cell in find_empty_cells(row):
+                for value in cell.domain:
+                    cell.value = value
+                    try:
+                        if(state.board[cell.x - 1][cell.y].value.upper() == cell.value.upper() and 
+                        state.board[cell.x - 2][cell.y].value.upper() == cell.value.upper()):
+                            cell.domain.remove(cell.value)
+                            if cell.domain == []:
+                                return False
+                            
+                    except:
+                        pass
+                    
+                    try:
+                        if state.board[cell.x - 1][cell.y].value == '_' and state.board[cell.x - 2][cell.y].value.upper() == \
+                            cell.value.upper():
+                                if state.board[cell.x - 1][cell.y].domain == [cell.value]:
+                                    cell.domain.remove(cell.value)
+                                    if cell.domain == []:
+                                        return False 
+                                    
+                    except:
+                        pass 
+                            
+                    try:
+                        if state.board[cell.x - 2][cell.y].value == '_' and state.board[cell.x - 1][cell.y].value.upper() == \
+                            cell.value.upper():
+                                if state.board[cell.x - 2][cell.y].domain == [cell.value]:
+                                    cell.domain.remove(cell.value)
+                                    if cell.domain == []:
+                                        return False
+                                    
+                    except:
+                        pass
+                                
+                    try:
+                        if state.board[cell.x - 2][cell.y].domain == [cell.value] and state.board[cell.x - 1][cell.y].domain ==\
+                            [cell.value]:
+                                cell.domain.remove(cell.value)
+                                if cell.domain == []:
+                                    return False
+                                
+                    except:
+                        pass
+                            
+                    try:
+                        if(state.board[cell.x][cell.y - 1].value.upper() == cell.value.upper() and 
+                        state.board[cell.x][cell.y - 2].value.upper() == cell.value.upper()):
+                            cell.domain.remove(cell.value)
+                            if cell.domain == []:
+                                return False
+                            
+                    except:
+                        pass
+                        
+                    try:
+                        if state.board[cell.x][cell.y - 1].value == '_' and state.board[cell.x][cell.y - 2].value.upper() == \
+                            cell.value.upper():
+                                if state.board[cell.x][cell.y - 1].domain == [cell.value]:
+                                    cell.domain.remove(cell.value)
+                                    if cell.domain == []:
+                                        return False
+                                    
+                    except:
+                        pass
+                                
+                    try:
+                        if state.board[cell.x][cell.y - 2].value == '_' and state.board[cell.x][cell.y - 1].value.upper() == \
+                            cell.value.upper():
+                                if state.board[cell.x][cell.y - 2].domain == [cell.value]:
+                                    cell.domain.remove(cell.value)
+                                    if cell.domain == []:
+                                        return False
+                                    
+                    except:
+                        pass
+                                
+                    try:
+                        if state.board[cell.x][cell.y - 2].domain == [cell.value] and state.board[cell.x][cell.y - 1].domain ==\
+                            [cell.value]:
+                                cell.domain.remove(cell.value)
+                                if cell.domain == []:
+                                    return False
+                                
+                    except:
+                        pass
+                            
+                    try:
+                        if(state.board[cell.x + 1][cell.y].value.upper() == cell.value.upper() and 
+                        state.board[cell.x + 2][cell.y].value.upper() == cell.value.upper()):
+                            cell.domain.remove(cell.value)
+                            if cell.domain == []:
+                                return False
+                            
+                    except:
+                        pass
+                    
+                    try:
+                        if state.board[cell.x + 1][cell.y].value == '_' and state.board[cell.x + 2][cell.y].value.upper() == \
+                            cell.value.upper():
+                                if state.board[cell.x + 1][cell.y].domain == [cell.value]:
+                                    cell.domain.remove(cell.value)
+                                    if cell.domain == []:
+                                        return False
+                                    
+                    except:
+                        pass
+                                
+                    try:
+                        if state.board[cell.x + 2][cell.y].value == '_' and state.board[cell.x + 1][cell.y].value.upper() == \
+                            cell.value.upper():
+                                if state.board[cell.x + 2][cell.y].domain == [cell.value]:
+                                    cell.domain.remove(cell.value)
+                                    if cell.domain == []:
+                                        return False
+                                    
+                    except:
+                        pass
+                                
+                    try:
+                        if state.board[cell.x + 2][cell.y].domain == [cell.value] and state.board[cell.x + 1][cell.y].domain ==\
+                            [cell.value]:
+                                cell.domain.remove(cell.value)
+                                if cell.domain == []:
+                                    return False
+                                
+                    except:
+                        pass
+                            
+                    try:
+                        if(state.board[cell.x][cell.y + 1].value.upper() == cell.value.upper() and 
+                        state.board[cell.x][cell.y + 2].value.upper() == cell.value.upper()):
+                            cell.domain.remove(cell.value)
+                            if cell.domain == []:
+                                return False
+                            
+                    except:
+                        pass
+                        
+                    try:
+                        if state.board[cell.x][cell.y + 1].value == '_' and state.board[cell.x][cell.y + 2].value.upper() == \
+                            cell.value.upper():
+                                if state.board[cell.x][cell.y + 1].domain == [cell.value]:
+                                    cell.domain.remove(cell.value)
+                                    if cell.domain == []:
+                                        return False
+                                    
+                    except:
+                        pass
+                                
+                    try:
+                        if state.board[cell.x][cell.y + 2].value == '_' and state.board[cell.x][cell.y + 1].value.upper() == \
+                            cell.value.upper():
+                                if state.board[cell.x][cell.y + 2].domain == [cell.value]:
+                                    cell.domain.remove(cell.value)
+                                    if cell.domain == []:
+                                        return False
+                                    
+                    except:
+                        pass
+                                
+                    try:
+                        if state.board[cell.x][cell.y + 2].domain == [cell.value] and state.board[cell.x][cell.y + 1].domain ==\
+                            [cell.value]:
+                                cell.domain.remove(cell.value)
+                                if cell.domain == []:
+                                    return False
+                                
+                    except:
+                        pass  
+                    
+                    if len(list(filter(Whether_cell_is_colorful_or_not(color=cell.value), row))) > state.size / 2:
+                        cell.domain.remove(cell.value)
+                        if cell.domain == []:
+                            return False
+                        
+                    elif len(list(filter(Whether_cell_is_colorful_or_not(color=cell.value), find_empty_row_cells(row)))) < state.size -\
+                    len(list(filter(Whether_cell_is_colorful_or_not(color=cell.value), row))) or\
+                    len(list(filter(Whether_cell_is_colorful_or_not(color=['b', 'w'].remove(cell.value))[0],
+                                    find_empty_row_cells(row)))) < state.size -\
+                    len(list(filter(Whether_cell_is_colorful_or_not(color=['b', 'w'].remove(cell.value))[0], row))):
+                        cell.domain.remove(cell.value)
+                        if cell.domain == []:
+                            return False
+                        
+                    col = [state.board[i][cell.y] for i in range(state.size)]
+                    if len(list(filter(Whether_cell_is_colorful_or_not(color=cell.value), col))) > state.size / 2:
+                        cell.domain.remove(cell.value)
+                        if cell.domain == []:
+                            return False
+                        
+                    elif len(list(filter(Whether_cell_is_colorful_or_not(color=cell.value), find_empty_row_cells(col)))) < state.size -\
+                    len(list(filter(Whether_cell_is_colorful_or_not(color=cell.value), col))) or\
+                    len(list(filter(Whether_cell_is_colorful_or_not(color=['b', 'w'].remove(cell.value))[0],
+                                    find_empty_row_cells(col)))) < state.size -\
+                    len(list(filter(Whether_cell_is_colorful_or_not(color=['b', 'w'].remove(cell.value))[0], col))):
+                        cell.domain.remove(cell.value)
+                        if cell.domain == []:
+                            return False
+                        
+                cell.value = '_'
+                
+        for row in state.board:
+            if list(filter(Whether_len_is_2_or_not, [c for c in row if c!= cell]) == [] and
+                    len(list(filter(Whether_cell_is_assigned_or_not, row)) != state.size)):
+                for row2 in state.board[state.board.index(row) + 1:]:
+                    if list(filter(Whether_len_is_2_or_not, [c for c in row2 if c!= cell])):
+                        s = set()
+                        for c in find_empty_cells(row):
+                            c.value = c.domain[0]
+                            s.add(c) 
+                        
+                        for c in find_empty_cells(row2):
+                            c.value = c.domain[0]
+                            s.add(c)
+                            
+                        if [c.value for c in row ] == [c.value for c in row2]:
+                            return False
+                            
+                        for c in s:
+                            c.value = '_'
+                            
+        transpose = [[state.board[j][i] for j in range(state.size)] for i in range(state.size)]
+        for col in transpose:
+            if list(filter(Whether_len_is_2_or_not, [c for c in col if c!= cell]) == [] and
+                    len(list(filter(Whether_cell_is_assigned_or_not, col)) != state.size)):
+                for col2 in state.board[state.board.index(col) + 1:]:
+                    if list(filter(Whether_len_is_2_or_not, [c for c in col2 if c!= cell])):
+                        s = set()
+                        for c in find_empty_cells(col):
+                            c.value = c.domain[0]
+                            s.add(c) 
+                        
+                        for c in find_empty_cells(col2):
+                            c.value = c.domain[0]
+                            s.add(c)
+                            
+                        if [c.value for c in col ] == [c.value for c in col2]:
+                            return False
+                            
+                        for c in s:
+                            c.value = '_'
+        return True
+        
     def backTrack(state):  #implement backTrack and other csp functions in Binairo.py
         key = 1
         if check_termination(state):
