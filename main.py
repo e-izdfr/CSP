@@ -3,7 +3,6 @@ from Binairo import *
 from Cell import *
 from State import *
 import random
-import traceback
 ## w b
 
 def main():
